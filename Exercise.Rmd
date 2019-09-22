@@ -1,0 +1,67 @@
+---
+title: "Exercise 1"
+author: "Helene"
+date: "22/09/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(scales)
+
+```
+
+
+
+
+## Create Data
+First, we need to generate a random sample from a log-normal distribution with $\mu= 1$ and $\sigma=0.25$. 
+
+```{r}
+set.seed(323883501)
+
+n <- 100
+mu <- 1
+sigma <- 0.25
+
+data1 <- rlnorm(n, mu, sigma)
+```
+
+Using the rlnorm- command without adjusting leads to a dataset with mean `r round(mean(data1),4)` and standard deviation `r round(sd(data1), 4)`.
+
+We could reparameterize such that the mean would be 1 and the standard deviation 0.25, but I think that's not needed here (unless I misinterpreted the task).
+
+
+## Plots
+### Normal Histogram
+To plot a histogram, we use ggplot. To do this we prepare the data (I don't really know if this is necessary, but it works)
+
+```{r}
+useddata <-data.frame(data1)
+
+```
+
+and set the binwidth to 0.1 so that the plot doesn't become too confusing
+
+```{r}
+plot <- ggplot(useddata, aes(x = data1), y= count)+ geom_histogram(binwidth = 0.1) 
+plot
+
+```
+
+### Logscale Density
+
+to plot the density on a logscale, we also use ggplot
+
+```{r}
+dense <- ggplot(useddata, aes(x = data1)) + geom_density() + scale_x_log10()
+dense
+```
+
+
+I hope this is what you expected from the task. I am pretty sure that there are way more elegant and straight-forward ways to do it. Nevertheless I would like to ask you to be mild, because I never did anything with R before. 
+
+
+
